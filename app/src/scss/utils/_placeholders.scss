@@ -1,0 +1,22 @@
+%caption {
+	color: $color-white;
+	position: absolute;
+	font-size: em(76);
+	text-transform: uppercase;
+	top: percentage(390/760);
+	left: 5%;
+	right: 5%;
+	z-index: 2;
+	line-height: (68/76);
+	font-family: $font-family-headings;
+	letter-spacing: -1px;
+	text-align: center;
+
+	&.inactive {
+		opacity: 0;
+	}
+	
+	.bold {
+		font-weight: $font-weight-bold;
+	}
+}

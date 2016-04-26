@@ -1,0 +1,21 @@
+* {
+        box-sizing: border-box;
+        &:after,
+        &:before{
+                box-sizing: inherit;
+        }
+}
+
+html {
+        font-size: 62.5%;
+        box-sizing: border-box;
+        height: 100%;
+}
+
+body {
+        background-color: $color-body-background;
+        @include font-size($font-size-base);
+        font-family: $font-family-base;
+        font-weight: $font-weight-light;
+        height: 100%;
+}
