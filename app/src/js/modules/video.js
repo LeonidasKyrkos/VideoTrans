@@ -6,8 +6,9 @@
 */
 
 class VideoTransitions {
-	constructor($el,settings) {
+	constructor($el,settings,transitions) {
 		this.$container = $el;
+		this.customTransitions = transitions;
 		this.settings = this.setup(settings);
 		this.transitionType = this.settings.transitionType;
 		this.transitions = this.initTransObject();
@@ -16,6 +17,7 @@ class VideoTransitions {
 		this.$videos = this.$container.find('video');
 		this.$captions = this.$container.find('[data-js="caption"]');
 		this.videos = this.getVideos();
+		
 	}
 
 	// create settings object using class' second parameter or defaults
@@ -45,6 +47,7 @@ class VideoTransitions {
 		return x;
 	}
 
+	// define out transition/animation classes. Include custom ones passed in during intialisation
 	initTransObject() {
 		let obj = {
 			default: {
@@ -72,7 +75,14 @@ class VideoTransitions {
 				easing: 'ease-out'
 			}
 		}
-
+		
+		// loop through custom transitions provided by user and add them to our transitions object.
+		Object.assign(obj,this.customTransitions);
+		for(let transition in this.customTransitions) {
+			let clone = Object.assign({},obj.default)
+			obj[transition] = Object.assign(clone,obj[transition]); 
+		}
+		
 		return obj;
 	}
 
