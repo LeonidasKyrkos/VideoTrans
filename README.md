@@ -16,67 +16,66 @@ __________
 ##Markup for one video + captions
 
 
-    <div class="video-trans__outerwrap" data-js="video-trans">
-    	<div class="video-trans__videos">
-    		<div class="video-trans__wrap">
-    			<video class="video-trans__video" data-js="video-trans.video">
-    				<source src="" type="video/mp4" data-src="https://1234567.cloudfront.net/videos/video-src.mp4" />
-    				<source src="" type="video/mp4" data-src="https://1234567.cloudfront.net/videos/video-src.ogv" />
-    				<source src="" type="video/mp4" data-src="https://1234567.cloudfront.net/videos/video-src.webm" />
-    			</video>
-    			<span class="video-trans__caption inactive" data-js="video-trans.caption" data-start="1.5" data-end="8">Caption 1</span>
-    			<span class="video-trans__caption inactive" data-js="video-trans.caption" data-start="9.5" data-end="15.5">Caption 2</span>
-    			<span class="video-trans__caption inactive" data-js="video-trans.caption" data-start="17" data-end="26.5">Caption 3</span>
-    			<span class="video-trans__caption inactive" data-js="video-trans.caption" data-start="28" data-end="35.5">Caption 4</span>
-    			<span class="video-trans__caption inactive" data-js="video-trans.caption" data-start="37" data-end="44.5">Caption 5</span>
-    			<span class="video-trans__caption inactive" data-js="video-trans.caption" data-start="46" data-end="53.5">Caption 6</span>
-    			<span class="video-trans__caption inactive" data-js="video-trans.caption" data-start="55" data-end="62">Caption 7</span>
-    		</div>
-    	</div>
-    </div>
+    <section class="video-trans__outerwrap" data-js="video">
+		<ol class="video-trans__videos">
+			<li class="video-trans__wrap">
+				<video class="video-trans__video">
+					<source src="/media/video/test-video.mp4" type="video/mp4">
+				</video>
+				<span class="video-trans__caption inactive" data-js="caption" data-start="0.5" data-end="1.5">This is<br><span class="bold">example text</span></span>
+				<span class="video-trans__caption inactive" data-js="caption" data-start="2" data-end="3">This is<br><span class="bold">example text</span></span>
+				<span class="video-trans__caption inactive" data-js="caption" data-start="3.5" data-end="4.5">This is<br><span class="bold">example text</span></span>
+				<span class="video-trans__caption inactive" data-js="caption" data-start="5" data-end="6">This is<br><span class="bold">example text</span></span>
+				<span class="video-trans__caption inactive" data-js="caption" data-start="6.5" data-end="7.5">This is<br><span class="bold">example text</span></span>
+			</li>
+		</ol>
+	</section>
     
     
 ##Markup for multiple videos + captions
 
 
-    <div class="video-trans__outerwrap" data-js="video-trans">
-    	<div class="video-trans__videos">
-    		<div class="video-trans__wrap">
-    			<video class="video-trans__video" data-js="video-trans.video">
-    				<source src="" type="video/mp4" data-src="https://1234567.cloudfront.net/videos/video-src.mp4" />
-    				<source src="" type="video/mp4" data-src="https://1234567.cloudfront.net/videos/video-src.ogv" />
-    				<source src="" type="video/mp4" data-src="https://1234567.cloudfront.net/videos/video-src.webm" />
-    			</video>
-    			<video class="video-trans__video" data-js="video-trans.video">
-    				<source src="" type="video/mp4" data-src="https://1234567.cloudfront.net/videos/video-src.mp4" />
-    				<source src="" type="video/mp4" data-src="https://1234567.cloudfront.net/videos/video-src.ogv" />
-    				<source src="" type="video/mp4" data-src="https://1234567.cloudfront.net/videos/video-src.webm" />
-    			</video>
-    			<video class="video-trans__video" data-js="video-trans.video">
-    				<source src="" type="video/mp4" data-src="https://1234567.cloudfront.net/videos/video-src.mp4" />
-    				<source src="" type="video/mp4" data-src="https://1234567.cloudfront.net/videos/video-src.ogv" />
-    				<source src="" type="video/mp4" data-src="https://1234567.cloudfront.net/videos/video-src.webm" />
-    			</video>
-    			<video class="video-trans__video" data-js="video-trans.video">
-    				<source src="" type="video/mp4" data-src="https://1234567.cloudfront.net/videos/video-src.mp4" />
-    				<source src="" type="video/mp4" data-src="https://1234567.cloudfront.net/videos/video-src.ogv" />
-    				<source src="" type="video/mp4" data-src="https://1234567.cloudfront.net/videos/video-src.webm" />
-    			</video>
-    			<video class="video-trans__video" data-js="video-trans.video">
-    				<source src="" type="video/mp4" data-src="https://1234567.cloudfront.net/videos/video-src.mp4" />
-    				<source src="" type="video/mp4" data-src="https://1234567.cloudfront.net/videos/video-src.ogv" />
-    				<source src="" type="video/mp4" data-src="https://1234567.cloudfront.net/videos/video-src.webm" />
-    			</video>
-    			<span class="video-trans__caption inactive" data-js="video-trans.caption" data-start="1.5" data-end="8">Caption 1</span>
-    			<span class="video-trans__caption inactive" data-js="video-trans.caption" data-start="9.5" data-end="15.5">Caption 2</span>
-    			<span class="video-trans__caption inactive" data-js="video-trans.caption" data-start="17" data-end="26.5">Caption 3</span>
-    			<span class="video-trans__caption inactive" data-js="video-trans.caption" data-start="28" data-end="35.5">Caption 4</span>
-    			<span class="video-trans__caption inactive" data-js="video-trans.caption" data-start="37" data-end="44.5">Caption 5</span>
-    			<span class="video-trans__caption inactive" data-js="video-trans.caption" data-start="46" data-end="53.5">Caption 6</span>
-    			<span class="video-trans__caption inactive" data-js="video-trans.caption" data-start="55" data-end="62">Caption 7</span>
-    		</div>
-    	</div>
-    </div>
+    <section class="video-trans__outerwrap" data-js="video">
+		<ol class="video-trans__videos">
+			<li class="video-trans__wrap">
+				<video class="video-trans__video">
+					<source src="/media/video/test-video.mp4" type="video/mp4">
+				</video>
+				<span class="video-trans__caption inactive" data-js="caption" data-start="1.5" data-end="4.5">This is<br><span class="bold">example text</span></span>
+			</li>
+			<li class="video-trans__wrap">
+				<video class="video-trans__video">
+					<source src="/media/video/test-video.mp4" type="video/mp4">
+				</video>
+				<span class="video-trans__caption inactive" data-js="caption" data-start="1.5" data-end="4.5">This is<br><span class="bold">example text 2</span></span>
+			</li>
+			<li class="video-trans__wrap">
+				<video class="video-trans__video">
+					<source src="/media/video/test-video.mp4" type="video/mp4">
+				</video>
+				<span class="video-trans__caption inactive" data-js="caption" data-start="1.5" data-end="4.5">This is<br><span class="bold">example text3</span></span>
+			</li>
+			<li class="video-trans__wrap">
+				<video class="video-trans__video">
+					<source src="/media/video/test-video.mp4" type="video/mp4">
+				</video>
+				<span class="video-trans__caption" data-js="caption" data-start="1.5" data-end="4.5">This is<br><span class="bold">example text 3</span></span>
+			</li>
+			<li class="video-trans__wrap">
+				<video class="video-trans__video">
+					<source src="/media/video/test-video.mp4" type="video/mp4">
+				</video>
+				<span class="video-trans__caption inactive" data-js="caption" data-start="1.5" data-end="4.5">This is<br><span class="bold">example text 4</span></span>
+
+			</li>
+			<li class="video-trans__wrap">
+				<video class="video-trans__video">
+					<source src="/media/video/test-video.mp4" type="video/mp4">
+				</video>
+				<span class="video-trans__caption inactive" data-js="caption" data-start="1.5" data-end="4.5">This is<br><span class="bold">example text 5</span></span>
+			</li>
+		</ol>
+	</section>
     
 
 ##Init function:

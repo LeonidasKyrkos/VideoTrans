@@ -1,12 +1,14 @@
-$module: 			'video';
+$module: 			'video-trans';
 
 
 .#{$module} {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: auto;
+	&__video {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: auto;
+	}
 
 	&__wrap {
 		position: absolute;
@@ -58,6 +60,11 @@ $module: 			'video';
 	}	
 
 	&__outerwrap {
+		position: relative;
+		padding-bottom: 55.8%;
+	}
+	
+	&__videos {
 		width: 100%;
 		margin: 0 auto;
 		overflow: hidden;

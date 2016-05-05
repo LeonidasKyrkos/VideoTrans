@@ -16,31 +16,28 @@ class VideoTransitions {
 		this.$videos = this.$container.find('video');
 		this.$captions = this.$container.find('[data-js="caption"]');
 		this.videos = this.getVideos();
-			
-		// set up window events for triggering initialisation, ending transition, and end of sequence.
-		$(window).on('canplay',$.proxy(this.init,this))
-				 .on('seeking',$.proxy(this.ending,this))
-				 .on('ended',$.proxy(this.ended,this));
 	}
 
 	// create settings object using class' second parameter or defaults
 	setup(settings) {
 		let x = {
-			transitionType: settings.transitionType || 'default',
-			looping: settings.looping || false,
-			transTime: settings.transTime || 3,
-			loopText: settings.loopText || false,
-			startImage: settings.startImage || false,
-			endText: settings.endText || false,
-			endImage: settings.endImage || false,
+			transitionType: 'default',
+			looping: false,
+			transTime: 3,
+			loopText: false,
+			startImage: false,
+			endText: false,
+			endImage: false,
 			restarted: false
 		}
-
-		!x.startImage ? false : this.$container.prepend(`<div data-js="startpoint" class="video__startpoint--img" style="background-image: url('${x.startImage}')"><!--[a]--></div>`);
+		
+		Object.assign(x,settings);
+		
+		!x.startImage ? false : this.$container.prepend(`<div data-js="startpoint" class="video-trans__startpoint--img" style="background-image: url('${x.startImage}')"><!--[a]--></div>`);
 
 		// if end image or text then add markup and then add it to the settings.end property
-		!x.endImage ? false : this.$container.prepend(`<div data-js="endpoint" class="video__endpoint--img inactive"><!--[a]--></div>`);
-		!x.endText ? false : this.$container.prepend(`<h1 data-js="endpoint" class="video__endpoint--text inactive">${x.endText}</h1>`);
+		!x.endImage ? false : this.$container.prepend(`<div data-js="endpoint" class="video-trans__endpoint--img inactive"><!--[a]--></div>`);
+		!x.endText ? false : this.$container.prepend(`<h1 data-js="endpoint" class="video-trans__endpoint--text inactive">${x.endText}</h1>`);
 
 		x.start = $('[data-js="startpoint"]');
 		x.end = $('[data-js="endpoint"]');
@@ -121,7 +118,7 @@ class VideoTransitions {
 			video.$wrap.addClass(this.classDefault);
 
 			// when the first video can play -> go //
-			video.index === 0 ? video.$element.on('canplay',() => { $(window).trigger('canplay') }) : false;
+			video.index === 0 ? video.$element.one('canplay',() => { this.init() }) : false;
 
 			// sort out transition type and fallback //
 			let fn = this.transitions.hasOwnProperty(this.transitionType) ? this.transitions[this.transitionType].fn.bind(this) : null;
@@ -186,8 +183,8 @@ class VideoTransitions {
 		videoObj.status = 'stopped';
 		videoObj.$wrap.removeClass(this.classPlaying + ' ' + this.classOut);
 
-		// if last video in collection: trigger end event on window.
-		this.last(videoObj) ? $(window).trigger('ended') : false;
+		// if last video in collection: call this.ended which will either restart or end the process
+		this.last(videoObj) ? this.ended() : false;
 	}
 
 	// fn called when each video ends. hides captions if they haven't already been hidden based on timing
@@ -235,11 +232,11 @@ class VideoTransitions {
 
 		videoObj.$wrap.addClass(this.classOut);
 
-		// if not last, play the next video ELSE trigger seeking to bring in the endpoint text/image. 
+		// if not last, play the next video ELSE call our ending function
 		if(!this.last(videoObj)) {
 			this.playVideo(nextVideoObj);
 		} else {
-			$(window).trigger('seeking');
+			this.ending();
 		}
 	}
 
