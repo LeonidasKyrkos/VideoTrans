@@ -94,3 +94,13 @@ __________
     }
 
     $videos.each(initTransVideo);
+    
+    
+    
+    
+##To do list:
+
+* No autoplay/video fallback
+* Tidy up triggers
+* Convert to jQuery plugin
+* Add more default transition animations
