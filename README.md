@@ -96,6 +96,13 @@ __________
 		endImage: false,
 		restarted: false
 	}
+
+#####Passing your own settings
+	
+    $('[data-js="video-trans"]').each(()=>{
+    	new VideoTransitions($(this),[{transitionType: 'spin',looping: true,startImage: '/media/images/start.png'}],[{custom transition classes}])
+    });
+
     
 ##Custom transitions (param 3)
 
@@ -106,6 +113,19 @@ __________
 		property: 'max-height',
 		easing: 'ease-in'
 	}
+
+#####Passing your own animation/transition classes
+	
+    $('[data-js="video-trans"]').each(()=>{
+    	new VideoTransitions($(this),[{settings}],
+    	[{example: {
+			classOut: 'exampleOut',
+			classPlaying: 'playingExample'
+			classDefault: 'example',
+			property: 'max-height',
+			easing: 'ease-in'
+		}}])
+    });
     
 ##To do list:
 
