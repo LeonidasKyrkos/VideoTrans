@@ -1,4 +1,4 @@
-# VideoTrans
+# VideoTrans v0.6
 
 VideoTrans allows you to include a series of videos on a page and transition between them one or more times.
 
@@ -135,6 +135,5 @@ __________
     
 ##To do list:
 
-* No autoplay/video fallback
 * Convert to jQuery plugin
 * Add more default transition animations

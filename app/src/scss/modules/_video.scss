@@ -107,6 +107,10 @@ $module: 			'video-trans';
 			right: 0;
 			bottom: 0;
 			background-size: cover;
+			
+			.no-videoautoplay & {
+				display: none;
+			}
 		}
 	}
 
@@ -115,6 +119,40 @@ $module: 			'video-trans';
 
 		&.inactive {
 			opacity: 0;
+		}
+	}
+	
+	&__fallback-wrap {
+		display: none;
+		position: relative;
+		z-index: 2;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		
+		.no-videoautoplay & {
+			display: block;
+		}
+	}
+	
+	&__fallback {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-size: cover;
+		background-position: center;
+		opacity: 0;
+		
+		.video-trans__wrap & {
+			display: none;
+		}
+		
+		&.playing {
+			opacity: 1;
 		}
 	}
 }
