@@ -18,20 +18,9 @@ class VideoTransitions {
 		this.looping = this.settings.looping;
 		this.$videos = this.$container.find('video');
 		this.$captions = this.$container.find('[data-js="caption"]');
+		this.videos = this.getVideos();
 		
-		// entrypoint
-		if(typeof Modernizr !== 'undefined') {
-			Modernizr.on('videoautoplay',(result) => {
-				if (result) {
-					this.videos = this.getVideos();
-				} else {
-					this.fallback();
-				}
-			});
-		} else {
-			console.log(`You haven't included Modernizr on the page. VideoTrans won't be able to fallback if you're on a device without video or autoplay capabilities`);
-			this.videos = this.getVideos();
-		}
+		this.tests();
 	}
 
 	// create settings object using class' second parameter or defaults
@@ -112,13 +101,37 @@ class VideoTransitions {
 			this.classDefault = '';
 		}
 	}
+	
+	tests() {		
+		if(typeof Modernizr !== 'undefined') {
+			Modernizr.on('videoautoplay',(result) => {
+				if (result) {					
+					this.passed();
+				} else {					
+					this.failed();
+				}
+			});
+		} else {
+			console.log(`You haven't included Modernizr on the page. VideoTrans won't be able to fallback if you're on a device without video or autoplay capabilities`);
+			this.passed();
+		}
+	}
+	
+	passed() {
+		// when the first video can play -> go //
+		this.videos[0].$element.one('canplay',() => { this.init() });
+	}
+	
+	failed() {
+		this.fallbackToCarousel();
+	}
 
-	init() {
+	init() {		
 		// hide start element
 		this.settings.start.addClass('inactive');
 
 		// play the first video
-		this.playVideo(this.videos[0]);
+		this.playVideo(this.videos[0]);		
 	}
 
 	// collect all the videos and add event listeners for transitions. If captions are available, assign them
@@ -136,13 +149,13 @@ class VideoTransitions {
 			video.index = i;
 			video.status = 'stopped';
 			video.captions = this.assignCaptions(video);
+			video.$fallback = video.$wrap.find('[data-js="fallback"]');
+			
+			this.setTransDuration(video.$fallback);
 			video.error = false;
 
-			this.settings.transTime ? this.setTransDuration(video.$wrap) : false;
+			this.setTransDuration(video.$wrap);
 			video.$wrap.addClass(this.classDefault);
-
-			// when the first video can play -> go //
-			video.index === 0 ? video.$element.one('canplay',() => { this.init() }) : false;
 
 			// sort out transition type and fallback //
 			let fn = this.transitions.hasOwnProperty(this.transitionType) ? this.transitions[this.transitionType].fn.bind(this) : null;
@@ -305,8 +318,62 @@ class VideoTransitions {
 		this.settings.looping ? this.restart() : false;
 	}
 	
-	fallback() {
-		console.log('whoops no autoplay -- falling back to carousel.')
+	
+	// fallback for those no autoplay devices and IE8.
+	
+	fallbackToCarousel() {		
+		if(Modernizr.video) {
+			console.log(`We have video but no autoplay. Let's make a carousel.`)
+			this.initCarousel();
+		} else {
+			this.ohGodItsOldIeRunForTheHills();
+		}
+	}
+	
+	// initialise carousel and set up markup
+	initCarousel() {
+		this.createFallbackMarkup();
+		this.$fallbacksWrap = this.$container.find('[data-js="fallbackWrap"]'); 		
+		this.$fallbacks = this.$fallbacksWrap.find('[data-js="fallback"]');
+		this.$firstFallback = this.$fallbacks.eq(0);
+
+		setTimeout(()=>{ this.rotateCarousel(this.$firstFallback) },this.$firstFallback.data('duration') * 1000);
+	}
+	
+	// create markup required for carousel
+	createFallbackMarkup() {
+		this.fallbacks = [];		
+		for(let video of this.videos) {
+			this.fallbacks[video.index] = video.$fallback;
+		}
+		
+		this.$container.append('<div class="video-trans__fallback-wrap" data-js="fallbackWrap"></div>');
+		this.$fallbackWrap = $('[data-js="fallbackWrap"]');
+		
+		for(let $fallback of this.fallbacks) {
+			this.$fallbackWrap.append($fallback[0].outerHTML);
+		}
+	}
+	
+	// rotate the carousel by 1 image
+	rotateCarousel(next) {
+		let $current = this.$fallbacksWrap.find('.playing');
+		let $next = next;		
+		
+		if($current.index() === this.$fallbacks.length - 1) {
+			$next = this.$firstFallback;
+		} else {
+			$next = $current.next();
+		}
+		
+		$current.removeClass('playing');
+		$next.addClass('playing');
+		
+		setTimeout(($next)=>{ this.rotateCarousel($next) },$next.data('duration') * 1000)
+	}
+	
+	ohGodItsOldIeRunForTheHills() {
+		console.log('The dark times have come again.');
 	}
 }
 

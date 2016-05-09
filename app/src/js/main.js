@@ -1,6 +1,7 @@
 'use strict';
 
 import $ from 'jquery';
+window.$ = $;
 import VideoTransitions from './modules/video';
 
 $('[data-js="video"]').each((i, el) => 
