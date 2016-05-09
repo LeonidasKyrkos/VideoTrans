@@ -16,8 +16,15 @@ class VideoTransitions {
 		this.looping = this.settings.looping;
 		this.$videos = this.$container.find('video');
 		this.$captions = this.$container.find('[data-js="caption"]');
-		this.videos = this.getVideos();
 		
+		// entrypoint
+		Modernizr.on('videoautoplay',(result) => {
+			if (result) {
+				this.videos = this.getVideos();
+			} else {
+				this.fallback();
+			}
+		});
 	}
 
 	// create settings object using class' second parameter or defaults
@@ -32,7 +39,7 @@ class VideoTransitions {
 			endImage: false,
 			restarted: false
 		}
-		
+		x
 		Object.assign(x,settings);
 		
 		!x.startImage ? false : this.$container.prepend(`<div data-js="startpoint" class="video-trans__startpoint--img" style="background-image: url('${x.startImage}')"><!--[a]--></div>`);
@@ -289,6 +296,10 @@ class VideoTransitions {
 	// last video has ended, restart or allow to end.
 	ended() {
 		this.settings.looping ? this.restart() : false;
+	}
+	
+	fallback() {
+		console.log('whoops no autoplay -- falling back to carousel.')
 	}
 }
 
