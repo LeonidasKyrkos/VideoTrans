@@ -5,6 +5,8 @@
 	leo@redsnapper.net for questions
 */
 
+import $ from 'jquery';
+
 class VideoTransitions {
 	constructor($el,settings,transitions) {
 		this.$container = $el;
@@ -18,13 +20,18 @@ class VideoTransitions {
 		this.$captions = this.$container.find('[data-js="caption"]');
 		
 		// entrypoint
-		Modernizr.on('videoautoplay',(result) => {
-			if (result) {
-				this.videos = this.getVideos();
-			} else {
-				this.fallback();
-			}
-		});
+		if(typeof Modernizr !== 'undefined') {
+			Modernizr.on('videoautoplay',(result) => {
+				if (result) {
+					this.videos = this.getVideos();
+				} else {
+					this.fallback();
+				}
+			});
+		} else {
+			console.log(`You haven't included Modernizr on the page. VideoTrans won't be able to fallback if you're on a device without video or autoplay capabilities`);
+			this.videos = this.getVideos();
+		}
 	}
 
 	// create settings object using class' second parameter or defaults

@@ -1,7 +1,6 @@
 'use strict';
 
-global.$ = require('jquery');
-
+import $ from 'jquery';
 import VideoTransitions from './modules/video';
 
 $('[data-js="video"]').each((i, el) => 

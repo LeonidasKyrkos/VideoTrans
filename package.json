@@ -2,8 +2,7 @@
   "name": "gulpstart",
   "version": "0.0.2",
   "dependencies": {
-    "jquery": "^2.1.4",
-    "masonry-layout": "^4.0.0"
+    "jquery": "^2.1.4"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.1.18",
