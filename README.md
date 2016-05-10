@@ -12,6 +12,7 @@ Uses:
 * jQuery
 
 
+----
 
     let supportedBrowsers = ['Chrome','Safari','Firefox','Vivaldi','Edge','IE11','IE10','IE9'] 
 
