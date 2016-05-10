@@ -140,5 +140,6 @@ __________
     
 ##To do list:
 
-* Convert to jQuery plugin
+* Convert to jQuery plugin (maybe split into 2 versions. One jQuery plugin and one jQueryless plugin)
 * Add more default transition animations
+* Fix bugs on IE8
