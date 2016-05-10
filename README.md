@@ -14,7 +14,7 @@ Uses:
 
 ----
 
-    let supportedBrowsers = ['Chrome','Safari','Firefox','Vivaldi','Edge','IE11','IE10','IE9'] 
+    let supportedBrowsers = ['Chrome','Safari','Firefox',iOS Safari,'Vivaldi','Edge','IE11','IE10','IE9'] 
 
 **If you want fallback support for non-autoplay browsers and devices then please include the relevant Modernizr checks found in the link below**
 http://modernizr.com/download?-video-videoautoplay
