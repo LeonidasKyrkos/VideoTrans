@@ -5,7 +5,10 @@
 	leo@redsnapper.net for questions
 */
 
+'use strict';
+
 import $ from 'jquery';
+import "babel-polyfill";
 
 class VideoTransitions {
 	constructor($el,settings,transitions) {
@@ -35,8 +38,9 @@ class VideoTransitions {
 			endImage: false,
 			restarted: false
 		}
-		x
-		Object.assign(x,settings);
+		
+		$.extend(x,settings);
+		
 		
 		!x.startImage ? false : this.$container.prepend(`<div data-js="startpoint" class="video-trans__startpoint--img" style="background-image: url('${x.startImage}')"><!--[a]--></div>`);
 
@@ -80,10 +84,10 @@ class VideoTransitions {
 		}
 		
 		// loop through custom transitions provided by user and add them to our transitions object.
-		Object.assign(obj,this.customTransitions);
+		$.extend(obj,this.customTransitions);
 		for(let transition in this.customTransitions) {
-			let clone = Object.assign({},obj.default)
-			obj[transition] = Object.assign(clone,obj[transition]); 
+			let clone = $.extend({},obj.default);
+			obj[transition] = $.extend(clone,obj[transition]); 
 		}
 		
 		return obj;
@@ -104,11 +108,15 @@ class VideoTransitions {
 	
 	tests() {		
 		if(typeof Modernizr !== 'undefined') {
+			let timer = setTimeout(()=>{ $('html').addClass('no-videoautoplay'); this.failed(); console.log('failed to load test video') },3000);
 			Modernizr.on('videoautoplay',(result) => {
+				clearTimeout(timer);
 				if (result) {					
 					this.passed();
+					console.log('passed');
 				} else {					
 					this.failed();
+					console.log('failed');
 				}
 			});
 		} else {
