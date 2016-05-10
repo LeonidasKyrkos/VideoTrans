@@ -1,4 +1,4 @@
-# VideoTrans v0.6
+# VideoTrans v0.65
 
 VideoTrans allows you to include a series of videos on a page and transition between them one or more times.
 
