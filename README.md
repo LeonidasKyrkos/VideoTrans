@@ -1,6 +1,6 @@
-# VideoTrans v0.65
+# VideoTrans v0.66 -- unstable
 
-Video transitioning plugin v0.65 written by L Kyrkos (c) Redsnapper 2016.
+Video transitioning plugin written by L Kyrkos (c) Redsnapper 2016.
 Plugin aims to provide a system for implementing transitioning videos interlinked with timed text effects.
 Can be used with single video if only captions are required or multiple videos if video transitions are required.
 *Email questions to leo@redsnapper.net*
