@@ -8,92 +8,27 @@
 'use strict';
 
 import $ from 'jquery';
-
-// polyfill for the symbol stuff that babel outputs currently during for...of loops //
-import "babel-polyfill";
+import videoSettings from './submodules/settings.js';
+import videoTransitions from './submodules/transitions.js';
+import videoTests from './submodules/tests.js';
+import createVideosObject from './submodules/createVideosObject.js';
 
 class VideoTransitions {
-	constructor($el,settings,transitions) {
+	constructor($el,settings,userTransitions) {
 		this.$container = $el;
-		this.customTransitions = transitions;
-		this.settings = this.setup(settings);
+		this.customTransitions = userTransitions;
+		this.settings = videoSettings(settings,this.$container);
 		this.transitionType = this.settings.transitionType;
-		this.transitions = this.initTransObject();
+		this.transitions = videoTransitions(this);
 		this.initTransClasses();
 		this.looping = this.settings.looping;
 		this.$videos = this.$container.find('video');
 		this.$captions = this.$container.find('[data-js="caption"]');
-		this.videos = this.getVideos();
+		this.videos = createVideosObject(this);
 		
-		this.tests();
-	}
-
-	// create settings object using class' second parameter or defaults
-	setup(settings) {
-		let x = {
-			transitionType: 'default',
-			looping: true,
-			transTime: 3,
-			loopText: false,
-			startImage: false,
-			endText: false,
-			endImage: false,
-			restarted: false,
-			muted: true
-		}
-		
-		$.extend(x,settings);
-		
-		
-		!x.startImage ? false : this.$container.prepend(`<div data-js="startpoint" class="video-trans__startpoint--img" style="background-image: url('${x.startImage}')"><!--[a]--></div>`);
-
-		// if end image or text then add markup and then add it to the settings.end property
-		!x.endImage ? false : this.$container.prepend(`<div data-js="endpoint" class="video-trans__endpoint--img inactive"><!--[a]--></div>`);
-		!x.endText ? false : this.$container.prepend(`<h1 data-js="endpoint" class="video-trans__endpoint--text inactive">${x.endText}</h1>`);
-
-		x.start = $('[data-js="startpoint"]');
-		x.end = $('[data-js="endpoint"]');
-
-		return x;
-	}
-
-	// define out transition/animation classes. Include custom ones passed in during intialisation
-	initTransObject() {
-		let obj = {
-			default: {
-				fn: this.events,
-				classPlaying: 'playing',
-				classOut: 'fadeOut',
-				classDefault: 'fader',
-				property: 'opacity',
-				easing: 'linear'
-			},
-			none: {
-				fn: this.noTransition,
-				classPlaying: '',
-				classOut: '',
-				classDefault: '',
-				property: '',
-				easing: ''
-			},
-			spin: {
-				fn: this.events,
-				classPlaying: 'playing',
-				classOut: 'spinOut',
-				classDefault: 'spinner',
-				property: 'all',
-				easing: 'ease-out'
-			}
-		}
-		
-		// loop through custom transitions provided by user and add them to our transitions object.
-		$.extend(obj,this.customTransitions);
-		for(let transition in this.customTransitions) {
-			let clone = $.extend({},obj.default);
-			obj[transition] = $.extend(clone,obj[transition]); 
-		}
-		
-		return obj;
+		$.when(videoTests).done((bool)=>{
+	    	bool ? this.passed() : this.failed();
+	    });
 	}
 
 	// define transition classes [from this.transitions object]
@@ -106,27 +41,6 @@ class VideoTransitions {
 			this.classPlaying = '';
 			this.classOut = '';
 			this.classDefault = '';
-		}
-	}
-	
-	tests() {		
-		// run tests for Modernizr and videoautoplay
-		if(typeof Modernizr !== 'undefined') {
-			// manual timeout fallback. If we can't play the first video within 3 seconds then fallback to carousel //
-			let timer = setTimeout(()=>{ $('html').addClass('no-videoautoplay'); this.failed(); console.log('failed to load test video') },3000);
-			Modernizr.on('videoautoplay',(result) => {
-				clearTimeout(timer);
-				if (result) {					
-					this.passed();
-					console.log('passed');
-				} else {					
-					this.failed();
-					console.log('failed');
-				}
-			});
-		} else {
-			console.log(`You haven't included Modernizr on the page. VideoTrans won't be able to fallback if you're on a device without video or autoplay capabilities`);
-			this.passed();
 		}
 	}
 	
@@ -149,77 +63,18 @@ class VideoTransitions {
 		this.settings.start.addClass('inactive');
 		
 		// apply the mute status to the videos
-		for(let video of this.videos) {
-			video.element.muted = this.settings.muted;
+		for(var i = 0; i < Object.keys(this.videos).length; i++) {
+			this.videos[i].element.muted = this.settings.muted;
 		}
 		
 		// play the first video
 		this.playVideo(this.videos[0]);		
 	}
 
-	// collect all the videos and add event listeners for transitions. If captions are available, assign them
-	getVideos() {
-		let videos = [];
-		let video;
-
-		this.$videos.each((i, el) => {
-			let $el = $(el);
-			videos[i] = video = {};
-
-			video.$element = $el;
-			video.$wrap = video.$element.parent();
-			video.element = el;
-			video.index = i;
-			video.status = 'stopped';
-			video.captions = this.assignCaptions(video);
-			video.$fallback = video.$wrap.find('[data-js="fallback"]');			
-			this.setTransDuration(video.$fallback);
-			video.error = false;
-
-			this.setTransDuration(video.$wrap);
-			video.$wrap.addClass(this.classDefault);
-
-			// sort out transition type and fallback //
-			let fn = this.transitions.hasOwnProperty(this.transitionType) ? this.transitions[this.transitionType].fn.bind(this) : null;
-
-			if(fn === null) {
-				console.log(`You have passed an unknown transition type ${this.transitionType} - reverting to default of fade`);
-				fn = this.transitions['default'].fn.bind(this);
-			}
-
-			fn(video);
-		});
-
-		return videos;
-	}
-
 	// if we've been given transition durations then set them on the element (overrides the CSS)
 	setTransDuration($el) {
 		$el[0].style.WebkitTransition = `${this.transitions[this.transitionType].property} ${this.settings.transTime}s ${this.transitions[this.transitionType].easing}`;
 		$el[0].style.MozTransition = `${this.transitions[this.transitionType].property} ${this.settings.transTime}s ${this.transitions[this.transitionType].easing}`;
-	}
-
-	// fn called during video collection -> assigns relevant captions to passed video
-	assignCaptions(video) {
-		video.$captions = video.$wrap.find('[data-js="caption"]');
-		let captions = [];
-		let caption;
-
-		if(video.$captions !== null) {
-			video.$captions.each((i, el) => {
-				let $el = $(el);
-
-				captions[i] = {};
-				captions[i].$element = $el;
-				captions[i].start = $el.data('start');
-				captions[i].end = $el.data('end');
-				this.setTransDuration($el);
-			});
-
-			return captions;
-		} else {
-			return null;
-		}
 	}
 
 	events(videoObj) {
@@ -345,7 +200,6 @@ class VideoTransitions {
 	
 	fallbackToCarousel() {		
 		if(Modernizr.video) {
-			console.log(`We have video but no autoplay. Let's make a carousel.`)
 			this.initCarousel();
 		} else {
 			this.ohGodItsOldIeRunForTheHills();
@@ -365,15 +219,16 @@ class VideoTransitions {
 	// create markup required for carousel
 	createFallbackMarkup() {
 		this.fallbacks = [];		
-		for(let video of this.videos) {
-			this.fallbacks[video.index] = video.$fallback;
+		for(var i = 0; i < Object.keys(this.videos).length; i++) {
+			this.fallbacks[this.videos[i].index] = this.videos[i].$fallback;
+			
 		}
 		
 		this.$container.append('<div class="video-trans__fallback-wrap" data-js="fallbackWrap"></div>');
 		this.$fallbackWrap = $('[data-js="fallbackWrap"]');
 		
-		for(let $fallback of this.fallbacks) {
-			this.$fallbackWrap.append($fallback[0].outerHTML);
+		for(var i = 0; i < Object.keys(this.fallbacks).length; i++) {
+			this.$fallbackWrap.append(this.fallbacks[i][0].outerHTML);
 		}
 	}
 	
