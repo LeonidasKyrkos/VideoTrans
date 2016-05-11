@@ -1,5 +1,5 @@
 /*
-	Video transitioning plugin v0.5 written by L Kyrkos (c) Redsnapper 2016
+	Video transitioning plugin v0.65 written by L Kyrkos (c) Redsnapper 2016
 	Plugin aims to provide a system for implementing transitioning videos interlinked with timed text effects
 	Can be used with single video if only captions are required or multiple videos if video transitions are required
 	leo@redsnapper.net for questions
@@ -8,6 +8,8 @@
 'use strict';
 
 import $ from 'jquery';
+
+// polyfill for the symbol stuff that babel outputs currently during for...of loops //
 import "babel-polyfill";
 
 class VideoTransitions {
@@ -30,13 +32,14 @@ class VideoTransitions {
 	setup(settings) {
 		let x = {
 			transitionType: 'default',
-			looping: false,
+			looping: true,
 			transTime: 3,
 			loopText: false,
 			startImage: false,
 			endText: false,
 			endImage: false,
-			restarted: false
+			restarted: false,
+			muted: true
 		}
 		
 		$.extend(x,settings);
@@ -107,7 +110,9 @@ class VideoTransitions {
 	}
 	
 	tests() {		
+		// run tests for Modernizr and videoautoplay
 		if(typeof Modernizr !== 'undefined') {
+			// manual timeout fallback. If we can't play the first video within 3 seconds then fallback to carousel //
 			let timer = setTimeout(()=>{ $('html').addClass('no-videoautoplay'); this.failed(); console.log('failed to load test video') },3000);
 			Modernizr.on('videoautoplay',(result) => {
 				clearTimeout(timer);
@@ -126,8 +131,13 @@ class VideoTransitions {
 	}
 	
 	passed() {
-		// when the first video can play -> go //
-		this.videos[0].$element.one('canplay',() => { this.init() });
+		// if the first video has loaded -> go //
+		if(this.videos[0].element.readyStatus >= 4) {
+			this.init();
+		} else {
+			// when the first video can play -> go //
+			this.videos[0].$element.one('canplay',() => { this.init() });
+		}
 	}
 	
 	failed() {
@@ -137,7 +147,12 @@ class VideoTransitions {
 	init() {		
 		// hide start element
 		this.settings.start.addClass('inactive');
-
+		
+		// apply the mute status to the videos
+		for(let video of this.videos) {
+			video.element.muted = this.settings.muted;
+		}
+		
 		// play the first video
 		this.playVideo(this.videos[0]);		
 	}
@@ -157,8 +172,7 @@ class VideoTransitions {
 			video.index = i;
 			video.status = 'stopped';
 			video.captions = this.assignCaptions(video);
-			video.$fallback = video.$wrap.find('[data-js="fallback"]');
-			
+			video.$fallback = video.$wrap.find('[data-js="fallback"]');			
 			this.setTransDuration(video.$fallback);
 			video.error = false;
 

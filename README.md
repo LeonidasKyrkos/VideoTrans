@@ -1,6 +1,9 @@
 # VideoTrans v0.65
 
-VideoTrans allows you to include a series of videos on a page and transition between them one or more times.
+Video transitioning plugin v0.65 written by L Kyrkos (c) Redsnapper 2016.
+Plugin aims to provide a system for implementing transitioning videos interlinked with timed text effects.
+Can be used with single video if only captions are required or multiple videos if video transitions are required.
+*Email questions to leo@redsnapper.net*
 
 Demo page: http://leonidaskyrkos.github.io/
 
@@ -97,15 +100,15 @@ __________
 
 ##Default settings (param 2)
 
-    let x = {
-		transitionType: 'default',
-		looping: false,
-		transTime: 3,
-		loopText: false,
-		startImage: false,
-		endText: false,
-		endImage: false,
-		restarted: false
+    let settings = {
+		transitionType: 'default', // default = fade over
+		looping: true, // true for looping
+		transTime: 3, // transition duration
+		loopText: false, // include the captions in the loop
+		startImage: false, // Initial image (displayed while loading)
+		endText: false, // text to remain when looping video
+		endImage: false, // final image if no looping video
+		muted: true
 	}
 
 #####Passing your own settings
