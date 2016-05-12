@@ -46,7 +46,7 @@ class VideoTransitions {
 	
 	passed() {
 		// if the first video has loaded -> go //
-		if(this.videos[0].element.readyStatus >= 4) {
+		if(this.videos[0].element.readyState >= 4) {
 			this.init();
 		} else {
 			// when the first video can play -> go //
@@ -196,6 +196,19 @@ class VideoTransitions {
 	}
 	
 	
+	// destroy videoTrans
+	
+	destroy() {
+		for(var i = 0; i < Object.keys(this.videos).length; i++) {
+			this.videos[i].element.pause();
+			this.videos[i].element.currentTime = 0;
+			this.videos[i].$wrap.removeClass(this.transitions[this.transitionType].classPlaying);
+			delete this.videos[i];
+		}
+		delete this.videos;
+	}
+	
+	
 	// fallback for those no autoplay devices and IE8.
 	
 	fallbackToCarousel() {		
@@ -221,7 +234,6 @@ class VideoTransitions {
 		this.fallbacks = [];		
 		for(var i = 0; i < Object.keys(this.videos).length; i++) {
 			this.fallbacks[this.videos[i].index] = this.videos[i].$fallback;
-			
 		}
 		
 		this.$container.append('<div class="video-trans__fallback-wrap" data-js="fallbackWrap"></div>');
