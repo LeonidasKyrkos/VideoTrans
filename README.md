@@ -1,4 +1,4 @@
-# VideoTrans v0.66 -- unstable
+# VideoTrans v0.7 -- stable
 
 Video transitioning plugin written by L Kyrkos (c) Redsnapper 2016.
 Plugin aims to provide a system for implementing transitioning videos interlinked with timed text effects.
@@ -17,7 +17,17 @@ Uses:
 
 ----
 
-    let supportedBrowsers = ['Chrome','Safari','Firefox',iOS Safari,'Vivaldi','Edge','IE11','IE10','IE9'] 
+Supported browsers:
+
+* Chrome
+* Safari
+* Firefox
+* Vivaldi
+* Edge
+* IE11
+* IE10
+* IE9
+* **iOS and other no autoplay devices supported via fallback to CSS image transition**
 
 **If you want fallback support for non-autoplay browsers and devices then please include the relevant Modernizr checks found in the link below**
 http://modernizr.com/download?-video-videoautoplay
