@@ -139,4 +139,4 @@ __________
     })
 
 
-**L Kyrkos (c) Redsnapper 2016**
+**L Kyrkos © Redsnapper 2016**
