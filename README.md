@@ -12,7 +12,6 @@ Uses:
 * HTML5
 * CSS3 transitions
 * ES6 transpiled with babel
-* jQuery
 
 
 ----
