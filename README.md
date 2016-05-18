@@ -1,8 +1,7 @@
 # VideoTrans
 
-Video transitioning jQuery plugin
-Plugin aims to provide a system for implementing transitioning videos interlinked with timed text effects.
-Can be used with single video if only captions are required or multiple videos if video transitions are required.
+Video transitioning jQuery plugin which provides a system for implementing transitioning videos overlayed with timed text effects. Can be used with single video if only captions are required or multiple videos if video transitions are required.
+
 *Email questions to leo@redsnapper.net*
 
 Demo page: http://leonidaskyrkos.github.io/
