@@ -137,7 +137,6 @@ __________
 					classOut: 'exampleOut',
 					classPlaying: 'playingExample'
 					classDefault: 'example',
-					property: 'max-height',
 					easing: 'ease-in'
 				}
 			}
