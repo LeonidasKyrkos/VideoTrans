@@ -1,5 +1,5 @@
 /*
-	Video transitioning plugin v0.65 written by L Kyrkos (c) Redsnapper 2016
+	Video transitioning jquery plugin v0.15 [parity with 0.65 of default version] written by L Kyrkos (c) Redsnapper 2016
 	Plugin aims to provide a system for implementing transitioning videos interlinked with timed text effects
 	Can be used with single video if only captions are required or multiple videos if video transitions are required
 	leo@redsnapper.net for questions
@@ -13,10 +13,13 @@ import videoTransitions from './submodules/transitions.js';
 import videoTests from './submodules/tests.js';
 import createVideosObject from './submodules/createVideosObject.js';
 
-class VideoTransitions {
-	constructor($el,settings,userTransitions) {
-		this.$container = $el;
-		this.customTransitions = userTransitions;
+
+let pluginName = 'videoTransitions';
+
+class Plugin {
+	constructor(el,settings) {
+		this.container = el;
+		this.$container = $(this.container);
 		this.settings = videoSettings(settings,this.$container);
 		this.transitionType = this.settings.transitionType;
 		this.transitions = videoTransitions(this);
@@ -27,8 +30,8 @@ class VideoTransitions {
 		this.videos = createVideosObject(this);
 		
 		$.when(videoTests).done((bool)=>{
-	    	bool ? this.passed() : this.failed();
-	    });
+			bool ? this.passed() : this.failed();
+		});
 	}
 
 	// define transition classes [from this.transitions object]
@@ -266,4 +269,10 @@ class VideoTransitions {
 	}
 }
 
-export default VideoTransitions;
+$.fn[pluginName] = function (options) {
+	return this.each(function () {
+		if (!$.data(this, "plugin_" + pluginName)) {
+			return $.data(this, "plugin_" + pluginName, new Plugin(this, options));
+		}
+	});
+};
