@@ -7,12 +7,10 @@
 
 'use strict';
 
-import $ from 'jquery';
 import videoSettings from './submodules/settings.js';
 import videoTransitions from './submodules/transitions.js';
 import videoTests from './submodules/tests.js';
 import createVideosObject from './submodules/createVideosObject.js';
-
 
 let pluginName = 'videoTransitions';
 

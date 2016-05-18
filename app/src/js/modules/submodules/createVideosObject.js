@@ -1,6 +1,5 @@
 'use strict'
 
-import $ from 'jquery';
 import createCaptionsObject from './createCaptionsObject.js';
 
 

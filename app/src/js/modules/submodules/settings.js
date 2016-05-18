@@ -1,5 +1,5 @@
 'use strict'
-import $ from 'jquery';
+
 
 // create settings object using class' second parameter or defaults
 let videoSettings = function(settings,$container) {

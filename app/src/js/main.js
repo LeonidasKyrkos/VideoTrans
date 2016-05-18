@@ -1,6 +1,5 @@
 'use strict';
 
-import $ from 'jquery';
 import './modules/video';
 
 $('[data-js="video-trans"]').videoTransitions({

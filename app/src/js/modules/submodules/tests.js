@@ -1,6 +1,5 @@
 'use strict'
 
-import $ from 'jquery';
 
 let videoTests = function(){
 	let def = new $.Deferred();

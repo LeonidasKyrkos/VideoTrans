@@ -1,5 +1,5 @@
 'use strict'
-import $ from 'jquery';
+
 
 // define out transition/animation classes. Include custom ones passed in during intialisation
 let videoTransitions = function(scope) {

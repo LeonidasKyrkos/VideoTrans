@@ -1,6 +1,5 @@
 'use strict'
 
-import $ from 'jquery';
 
 // fn called during video collection -> assigns relevant captions to passed video
 let createCaptionsObject = function(scope,video) {
