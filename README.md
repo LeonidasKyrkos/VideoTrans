@@ -105,9 +105,11 @@ __________
     
 
 ##Init function:
-
-    $('[data-js="video-trans"]').each(()=>{
-    	new VideoTransitions($(this),[{settings}],[{custom transition classes}])
+    
+    $('[data-js="video-trans"]').videoTransitions({
+		endText: 'Ending text',
+		transTime: 1.5,
+		startImage: '/media/images/start.png'
     });
     
 
