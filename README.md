@@ -106,11 +106,7 @@ __________
 
 ##Init function:
     
-    $('[data-js="video-trans"]').videoTransitions({
-		endText: 'Ending text',
-		transTime: 1.5,
-		startImage: '/media/images/start.png'
-    });
+    $('[data-js="video-trans"]').videoTransitions();
     
 
 ##Default settings (param 2)
@@ -128,20 +124,18 @@ __________
 
 #####Passing your own settings
 	
-    $('[data-js="video-trans"]').each(()=>{
-    	new VideoTransitions($(this),{
-			transitionType: 'spin',
-			looping: true,
-			startImage: '/media/images/start.png',
-			customTransitions: {
-				example: {
-					classOut: 'exampleOut',
-					classPlaying: 'playingExample'
-					classDefault: 'example',
-					easing: 'ease-in'
-				}
+    $('[data-js="video-trans"]').videoTransitions({
+		transitionType: 'spin',
+		looping: true,
+		startImage: '/media/images/start.png',
+		customTransitions: {
+			example: {
+				classOut: 'exampleOut',
+				classPlaying: 'playingExample'
+				classDefault: 'example',
+				easing: 'ease-in'
 			}
-		})
+		}
     })
 
 
