@@ -139,4 +139,8 @@ __________
     })
 
 
+##CSS
+
+Now just include main.css on the page and you're good to go.
+
 **L Kyrkos © Redsnapper 2016**
