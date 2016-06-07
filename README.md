@@ -61,7 +61,7 @@ __________
 				<video class="video-trans__video">
 					<source src="/media/video/test-video.mp4" type="video/mp4">
 				</video>
-				<span class="video-trans__fallback playing" data-duration="2" data-js="fallback" style="background-image: url('/media/images/fallback.jpg')"></span>
+				<span class="video-trans__fallback" data-duration="2" data-js="fallback" style="background-image: url('/media/images/fallback.jpg')"></span>
 				<span class="video-trans__caption inactive" data-js="caption" data-start="1.5" data-end="4.5">This is<br><span class="bold">example text</span></span>
 			</li>
 			<li class="video-trans__wrap">
@@ -106,7 +106,7 @@ __________
 
 ##Init function:
     
-    $('[data-js="video-trans"]').videoTransitions();
+    $('[data-js="video-trans"]').videoTrans();
     
 
 ##Default settings (param 2)
@@ -124,7 +124,7 @@ __________
 
 #####Passing your own settings
 	
-    $('[data-js="video-trans"]').videoTransitions({
+    $('[data-js="video-trans"]').videoTrans({
 		transitionType: 'spin',
 		looping: true,
 		startImage: '/media/images/start.png',

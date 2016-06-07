@@ -232,6 +232,7 @@ class Plugin {
 		this.$fallbacksWrap = this.$container.find('[data-js="fallbackWrap"]'); 		
 		this.$fallbacks = this.$fallbacksWrap.find('[data-js="fallback"]');
 		this.$firstFallback = this.$fallbacks.eq(0);
+		this.$firstFallback.addClass('playing');
 
 		setTimeout(()=>{ this.rotateCarousel(this.$firstFallback) },this.$firstFallback.data('duration') * 1000);
 	}
