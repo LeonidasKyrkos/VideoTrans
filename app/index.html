@@ -18,7 +18,7 @@
 					<video class="video-trans__video">
 						<source src="/media/video/test-video.mp4" type="video/mp4">
 					</video>
-					<span class="video-trans__fallback playing" data-duration="2" data-js="fallback" style="background-image: url('/media/images/fallback.jpg')"></span>
+					<span class="video-trans__fallback" data-duration="2" data-js="fallback" style="background-image: url('/media/images/fallback.jpg')"></span>
 					<span class="video-trans__caption inactive" data-js="caption" data-start="1.5" data-end="4.5">This is<br><span class="bold">example text</span></span>
 				</li>
 				<li class="video-trans__wrap">
@@ -62,4 +62,14 @@
 	</body>
 	<script src="https://code.jquery.com/jquery-1.12.3.min.js" integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>
 	<script src="build/js/main.js"></script>
+	<script type="text/javascript">
+		(function(){
+			$('[data-js="video-trans"]').videoTrans({
+				muted: false,
+				looping: true,
+				startImage: './media/images/start.jpg',
+				transTime: 1.5
+			});
+		})();
+	</script>
 </html>
